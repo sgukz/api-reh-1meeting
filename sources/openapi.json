@@ -1,0 +1,87 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Service REH-1Meeting",
+        "description": "REST API using Nodejs with OpenAPI 3/Swagger Typescript",
+        "license": {
+            "name": "SGDEV Computer Center Roi-Et Hospital",
+            "url": "http://reh.go.th"
+        }
+    },
+    "servers": [{
+        "url": "http://{host}:{port}",
+        "description": "Service runing on local",
+        "variables": {
+            "port": {
+                "enum": [
+                    "9000",
+                    "8000"
+                ],
+                "default": "9000"
+            },
+            "host": {
+                "default": "localhost"
+            }
+        }
+    }],
+    "tags": [{
+        "name": "Users",
+        "description": "ข้อมูลผู้ใช้งาน"
+    }],
+    "paths": {
+        "/api/v1/user/register": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "ลงทะเบียนข้อมูลผู้ใช้งาน",
+                "security": [{
+                    "secret_key": [
+                        "secret_key"
+                    ]
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "code": {
+                                                    "type": "number"
+                                                },
+                                                "token": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "secret_key": {
+                "type": "apiKey",
+                "name": "SecretKey",
+                "in": "header"
+            }
+        }
+    }
+}
